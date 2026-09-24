@@ -2,54 +2,55 @@ public class Caja {
 
     protected int numero;
     private Cliente cliente;
-    private int itemsVendidos;
     private int personasAtendidas;
-    protected int itemsRestantes;
+    private boolean abierta;
     private Console console;
 
     public Caja(int numero) {
         this.numero = numero;
-        itemsVendidos = 0;
         personasAtendidas = 0;
-        itemsRestantes = 0;
+        abierta = false;
         console = new Console();
     }
 
+    public void abrir() {
+        abierta = true;
+    }
+
+    public boolean estaAbierta() {
+        return abierta;
+    }
+
     public boolean estaLibre() {
-        return cliente == null;
+        return abierta && cliente == null;
     }
 
     public void asignar(Cliente cliente) {
         this.cliente = cliente;
-        itemsRestantes = cliente.obtenerItems();
     }
 
     public void avanzarAtencion() {
-        if (!this.estaLibre()) {
-            itemsRestantes = itemsRestantes - 1;
-            if (itemsRestantes == 0) {
-                personasAtendidas = personasAtendidas + 1;
-                itemsVendidos = itemsVendidos + cliente.obtenerItems();
-                cliente = null;
-            }
+        if (cliente != null) {
+            personasAtendidas = personasAtendidas + 1;
+            cliente = null;
+            abierta = false;
         }
     }
 
     public void mostrar() {
-        console.write("Caja ["+numero+"] ");
-        console.writeln("[:]".repeat(itemsRestantes));
+        console.write("Caja [" + numero + "] ");
+        if (!abierta) {
+            console.writeln("Cerrada");
+        } else if (this.estaLibre()) {
+            console.writeln("Libre");
+        } else {
+            console.writeln("Atendiendo cliente");
+        }
     }
 
     public int obtenerPersonasAtendidas() {
         return personasAtendidas;
     }
 
-    public int obtenerItemsVendidos() {
-        return itemsVendidos;
-    }
-
-    public boolean puedeAtender(Cliente cliente){
-        return true;
-    }
 
 }
