@@ -36,7 +36,7 @@ public class Cola {
         return tamano;
     }
 
-    private boolean estaVacia(){
+    public boolean estaVacia(){
         return primero == null;
     }
 }

@@ -43,6 +43,18 @@ public class Lista {
         }
         return false;
     }
+
+    public boolean contiene(String dato) {
+        Nodo auxiliar = primero;
+        while (auxiliar != null) {
+            if (auxiliar.getDato().equals(dato)) {
+                return true;
+            }
+            auxiliar = auxiliar.getSiguiente();
+        }
+        return false;
+    }
+    
     public int getTamanoLista(){
         return tamano;
     }
